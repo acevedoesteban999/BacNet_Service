@@ -36,15 +36,23 @@ namespace BB_Service_Library
             bacnet_server.OnWritePropertyRequest += new BacnetClient.WritePropertyRequestHandler(handler_OnWritePropertyRequest);
 
             bacnet_server.Start();    // go
+            Console.WriteLine("BacNet_Service Stared!");
             // Send Iam
             bacnet_server.Iam(m_storage.DeviceId, new BacnetSegmentations());
-
+            
         }
 
-         public void bacnet_server_OnIam(BacnetClient sender, BacnetAddress adr, uint device_id, uint max_apdu, BacnetSegmentations segmentation, ushort vendor_id)
+        public void bacnet_server_OnIam(BacnetClient sender, BacnetAddress adr, uint device_id, uint max_apdu, BacnetSegmentations segmentation, ushort vendor_id)
         {
-            Console.WriteLine("bacnet_server_OnIam");
+            Console.WriteLine("bacnet_OnIam:\nIgnored Iam...");
             //ignore Iams from other devices. (Also loopbacks)
+        }
+        public void handler_OnWhoIs(BacnetClient sender, BacnetAddress adr, int low_limit, int high_limit)
+        {
+            Console.WriteLine("handler_OnWhoIs");
+            if (low_limit != -1 && m_storage.DeviceId < low_limit) return;
+            else if (high_limit != -1 && m_storage.DeviceId > high_limit) return;
+            sender.Iam(m_storage.DeviceId, new BacnetSegmentations());
         }
 
         /*****************************************************************************************************/
@@ -79,14 +87,7 @@ namespace BB_Service_Library
             }
         }
         /*****************************************************************************************************/
-        public void handler_OnWhoIs(BacnetClient sender, BacnetAddress adr, int low_limit, int high_limit)
-        {
-            Console.WriteLine("handler_OnWhoIs");
-            if (low_limit != -1 && m_storage.DeviceId < low_limit) return;
-            else if (high_limit != -1 && m_storage.DeviceId > high_limit) return;
-            sender.Iam(m_storage.DeviceId, new BacnetSegmentations());
-        }
-
+        
         /*****************************************************************************************************/
         public void handler_OnReadPropertyRequest(BacnetClient sender, BacnetAddress adr, byte invoke_id, BacnetObjectId object_id, BacnetPropertyReference property, BacnetMaxSegments max_segments)
         {
