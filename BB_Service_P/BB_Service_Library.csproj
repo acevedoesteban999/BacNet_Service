@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BACnet" Version="3.0.1-beta6" />
+    <PackageReference Include="Bluetooth" Version="1.0.0.2" />
+  </ItemGroup>
+
 </Project>
