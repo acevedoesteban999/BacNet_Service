@@ -8,16 +8,14 @@ class ConsoleApp
     {
         Trace.Listeners.Add(new ConsoleTraceListener());
 
+        BacNet_Service Client_OR = new BacNet_Client_OnlyRead_Service(444);
+        BacNet_Service Client_OR1 = new BacNet_Client_OnlyRead_Service(443);
 
-        BacNet_Service Server = new BacNet_Service(444);
-      
-        Server.StartActivity();
+        Client_OR.StartActivity();
+        Client_OR1.StartActivity();
 
         Thread.Sleep(1000);
-        BacnetObjectId OBJECT_ANALOG_VALUE_0 = new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0);
 
-
-        BacnetPropertyIds bacnetPropertyIds = BacnetPropertyIds.PROP_PRESENT_VALUE;
         BacnetValue _bacnetValue= new BacnetValue(24);
 
         while (true)
@@ -25,14 +23,17 @@ class ConsoleApp
             char a = Console.ReadKey().KeyChar;
             if (a=='w')
             {
-                Server.WriteScalarValue(444, OBJECT_ANALOG_VALUE_0, bacnetPropertyIds, _bacnetValue);
+                Client_OR.WriteScalarValue(444, _bacnetValue);
 
             }
             else  if(a=='r')
             {
                 _bacnetValue.Value = 0;
-                Server.ReadScalarValue(444, OBJECT_ANALOG_VALUE_0, bacnetPropertyIds, out _bacnetValue);
-                Console.WriteLine("Value:" + _bacnetValue);
+                if(Client_OR.ReadScalarValue(444, out _bacnetValue))
+                    Console.WriteLine("Value:" + _bacnetValue);
+                if (Client_OR.ReadScalarValue(443, out _bacnetValue))
+                    Console.WriteLine("Value:" + _bacnetValue);
+
             }
         }
 
