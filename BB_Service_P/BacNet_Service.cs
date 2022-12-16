@@ -39,9 +39,7 @@ namespace BB_Service_Library
             DevicesList = new List<BacNode>();
             m_storage = new DeviceStorage();
             m_storage.DeviceId = ID;
-            BacnetValue[] NoScalarValue = { value };
-            DeviceStorage.ErrorCodes code = m_storage.WriteProperty(new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, 1, NoScalarValue, true);
-
+            
         }
         /*****************************************************************************************************/
         public abstract void StartActivity();
@@ -64,7 +62,6 @@ namespace BB_Service_Library
             Value = NoScalarValue[0];
             return true;
         }
-
         /*****************************************************************************************************/
         public bool WriteScalarValue(int device_id, BacnetValue Value)
         {
@@ -85,7 +82,6 @@ namespace BB_Service_Library
             return true;
         }
         /*****************************************************************************************************/
-
         //protected void ReadWriteExample()
         //{
 
@@ -108,11 +104,9 @@ namespace BB_Service_Library
         //    else
         //        Console.WriteLine("Error somewhere !");
         //}
-
         /*****************************************************************************************************/
         public void handler_OnWhoIs(BacnetClient sender, BacnetAddress adr, int low_limit, int high_limit)
         {
-            Console.WriteLine(bacNetType.ToString()+"-ID:" + m_storage.DeviceId + "-> OnWhoIs");
             if (low_limit != -1 && m_storage.DeviceId < low_limit) return;
             else if (high_limit != -1 && m_storage.DeviceId > high_limit) return;
             sender.Iam(m_storage.DeviceId, new BacnetSegmentations());
@@ -120,13 +114,13 @@ namespace BB_Service_Library
         /*****************************************************************************************************/
         public void handler_OnIam(BacnetClient sender, BacnetAddress adr, uint device_id, uint max_apdu, BacnetSegmentations segmentation, ushort vendor_id)
         {
-            Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + (device_id!= m_storage.DeviceId?"-> OnIam":"-> Auto_Iam"));
             lock (DevicesList)
             {
                 // Device already registred ?
                 foreach (BacNode bn in DevicesList)
                     if (bn.getAdd(device_id) != null) return;   // Yes
 
+                Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + (device_id != m_storage.DeviceId ? "-> OnIam" : "-> Auto_Iam"));
                 // Not already in the list
                 DevicesList.Add(new BacNode(adr, device_id));   // add it
             }
