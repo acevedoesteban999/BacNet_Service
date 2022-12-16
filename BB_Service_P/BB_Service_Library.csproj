@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BACnet" Version="3.0.1-beta6" />
+    <PackageReference Include="InTheHand.Net.Bluetooth" Version="4.0.32" />
   </ItemGroup>
 
 </Project>
