@@ -7,7 +7,7 @@ namespace BB_Service_Library
     public enum BacNetTypes
     {
         Client_OnlyRead,
-        Client_WriteRead,
+        Client_ReadWrite,
         Server
     }
     interface BacNet_Interface

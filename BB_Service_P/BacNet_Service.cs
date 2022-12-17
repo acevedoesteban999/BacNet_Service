@@ -6,8 +6,8 @@ namespace BB_Service_Library
 {
     public class BacNode
     {
-        BacnetAddress adr;
-        uint device_id;
+        public BacnetAddress adr;
+        public uint device_id;
 
         public BacNode(BacnetAddress adr, uint device_id)
         {
@@ -35,7 +35,7 @@ namespace BB_Service_Library
         /*****************************************************************************************************/
         public BacNet_Service(uint ID=255)
         {
-            bacnet_client = new BacnetClient(new BacnetIpUdpProtocolTransport(0xBAC0, false));
+            bacnet_client=new BacnetClient(new BacnetIpUdpProtocolTransport(0xBAC0, false));
             DevicesList = new List<BacNode>();
             m_storage = new DeviceStorage();
             m_storage.DeviceId = ID;
@@ -44,6 +44,7 @@ namespace BB_Service_Library
         /*****************************************************************************************************/
         public abstract void StartActivity();
         /*****************************************************************************************************/
+
         public bool ReadScalarValue(int device_id, out BacnetValue Value)
         {
             
@@ -65,12 +66,10 @@ namespace BB_Service_Library
         /*****************************************************************************************************/
         public bool WriteScalarValue(int device_id, BacnetValue Value)
         {
-            if (this.bacNetType == BacNetTypes.Client_OnlyRead)
-                return false;
             BacnetAddress adr;
 
             // Looking for the device
-            adr = FindDeviceAddr((uint)device_id);
+            adr =FindDeviceAddr((uint)device_id);
             if (adr == null) return false;  // not found
 
             // Property Write
@@ -132,7 +131,6 @@ namespace BB_Service_Library
                 OnlyReadOneTime = true;
             else
                 return;
-            Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> OnReadPropertyRequest");
             lock (m_storage)
             {
                 try
@@ -142,6 +140,7 @@ namespace BB_Service_Library
 
                     if (code == DeviceStorage.ErrorCodes.Good)
                     {
+                        Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> OnReadPropertyRequest");
                         sender.ReadPropertyResponse(adr, invoke_id, sender.GetSegmentBuffer(max_segments), object_id, property, BacNetIList);
                         value = BacNetIList[0];
                     }
@@ -162,17 +161,16 @@ namespace BB_Service_Library
                 OnlyWriteOneTime = true;
             else
                 return;
-            Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> OnWritePropertyRequest");
+            if (this.bacNetType == BacNetTypes.Client_OnlyRead)
+                return;
             lock (m_storage)
             {
                 try
                 {
                     DeviceStorage.ErrorCodes code = m_storage.WriteProperty(object_id, BacnetPropertyIds.PROP_PRESENT_VALUE, 1, value.value, true);
-                    if (code == DeviceStorage.ErrorCodes.NotForMe)
-                        code = m_storage.WriteProperty(object_id, (BacnetPropertyIds)value.property.propertyIdentifier, value.property.propertyArrayIndex, value.value);
-
                     if (code == DeviceStorage.ErrorCodes.Good)
                     {
+                        Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> OnWritePropertyRequest");
                         sender.SimpleAckResponse(adr, BacnetConfirmedServices.SERVICE_CONFIRMED_WRITE_PROPERTY, invoke_id);
                         this.value = new BacnetValue(value.value);
                     }
@@ -203,5 +201,7 @@ namespace BB_Service_Library
                 return null;
             }
         }
+
+        public virtual void ReadAllScalarValue(IList<BacnetValueID> ValuesID) { }
     }
 }
