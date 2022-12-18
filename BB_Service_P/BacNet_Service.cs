@@ -33,7 +33,7 @@ namespace BB_Service_Library
         protected BacnetValue value;
         protected BacNetTypes bacNetType;
         /*****************************************************************************************************/
-        public BacNet_Service(uint ID=255)
+        public BacNet_Service(uint ID)
         {
             bacnet_client=new BacnetClient(new BacnetIpUdpProtocolTransport(0xBAC0, false));
             DevicesList = new List<BacNode>();
@@ -56,12 +56,18 @@ namespace BB_Service_Library
             if (adr == null) return false;  // not found
 
             // Property Read
-            
-            if (bacnet_client.ReadPropertyRequest(adr, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, out NoScalarValue) == false)
+            try
+            {
+                if (bacnet_client.ReadPropertyRequest(adr, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, out NoScalarValue) == false)
+                    return false;
+                Value = NoScalarValue[0];
+                return true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception:" + e.Message);
                 return false;
-
-            Value = NoScalarValue[0];
-            return true;
+            }
         }
         /*****************************************************************************************************/
         public bool WriteScalarValue(int device_id, BacnetValue Value)
@@ -75,34 +81,20 @@ namespace BB_Service_Library
             // Property Write
             BacnetValue[] NoScalarValue = { Value };
             BacnetObjectId bb = new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0);
-            if (bacnet_client.WritePropertyRequest(adr, bb, BacnetPropertyIds.PROP_PRESENT_VALUE, NoScalarValue) == false)
-                return false;
+            try 
+            {
+                if (bacnet_client.WritePropertyRequest(adr, bb, BacnetPropertyIds.PROP_PRESENT_VALUE, NoScalarValue) == false)
+                    return false;
+
+            }catch(Exception e)
+            {
+                Console.WriteLine("Exception:" + e.Message);
+            }
+
+
 
             return true;
         }
-        /*****************************************************************************************************/
-        //protected void ReadWriteExample()
-        //{
-
-        //    BacnetValue Value;
-        //    bool ret;
-        //    // Read Present_Value property on the object ANALOG_INPUT:0 provided by the device 12345
-        //    // Scalar value only
-        //    ret = ReadScalarValue(12345, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_INPUT, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, out Value);
-
-        //    if (ret == true)
-        //    {
-        //        Console.WriteLine("Read value : " + Value.Value.ToString());
-
-        //        // Write Present_Value property on the object ANALOG_OUTPUT:0 provided by the device 4000
-        //        BacnetValue newValue = new BacnetValue(Convert.ToSingle(Value.Value));   // expect it's a float
-        //        ret = WriteScalarValue(4000, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_OUTPUT, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, newValue);
-
-        //        Console.WriteLine("Write feedback : " + ret.ToString());
-        //    }
-        //    else
-        //        Console.WriteLine("Error somewhere !");
-        //}
         /*****************************************************************************************************/
         public void handler_OnWhoIs(BacnetClient sender, BacnetAddress adr, int low_limit, int high_limit)
         {
@@ -202,6 +194,6 @@ namespace BB_Service_Library
             }
         }
 
-        public virtual void ReadAllScalarValue(IList<BacnetValueID> ValuesID) { }
+        public virtual void ReadAllScalarValue(out  IList<BacnetValueID> ValuesID) { ValuesID = new List<BacnetValueID>();}
     }
 }

@@ -6,7 +6,7 @@ namespace BB_Service_Library
     public class BacNet_Client_ReadWrite_Service : BacNet_Service
     {
 
-        public BacNet_Client_ReadWrite_Service(uint ID)
+        public BacNet_Client_ReadWrite_Service(uint ID=254)
             : base(ID)
         {
             bacNetType = BacNetTypes.Client_ReadWrite;

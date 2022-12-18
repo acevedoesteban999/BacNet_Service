@@ -16,7 +16,7 @@ namespace BB_Service_Library
     public class BacNet_Server_Service : BacNet_Service
     {
 
-        public BacNet_Server_Service(uint ID)
+        public BacNet_Server_Service(uint ID=255)
             : base(ID)
         {
             bacNetType = BacNetTypes.Server;
@@ -36,17 +36,15 @@ namespace BB_Service_Library
             Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> Stared! -> OnWhoIs");
             bacnet_client.WhoIs();
         }
-        public override void ReadAllScalarValue(IList<BacnetValueID> ValuesID)
+        public override void ReadAllScalarValue(out IList<BacnetValueID> ValuesID)
         {
-
+            ValuesID = new List<BacnetValueID>();
             IList<BacnetValue> NoScalarValue;
             foreach ( BacNode bn in DevicesList)
             {
-                bacnet_client.ReadPropertyRequest(bn.adr, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, out NoScalarValue);
-                if(NoScalarValue!=null)
-                {
-                    ValuesID.Add(new BacnetValueID(bn.device_id,NoScalarValue[0]));        
-                }  
+                if(bacnet_client.ReadPropertyRequest(bn.adr, new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, out NoScalarValue)==false)               
+                    continue;    
+                 ValuesID.Add(new BacnetValueID(bn.device_id,NoScalarValue[0]));          
             }
         }
     }

@@ -6,7 +6,7 @@ namespace BB_Service_Library
     public class BacNet_Client_OnlyRead_Service:BacNet_Service
     {
         
-        public BacNet_Client_OnlyRead_Service(uint ID)
+        public BacNet_Client_OnlyRead_Service(uint ID=253)
             :base(ID)
         {
             bacNetType = BacNetTypes.Client_OnlyRead;
