@@ -3,35 +3,33 @@ using System.IO.BACnet.Storage;
 
 namespace BacNet_ClassLibrary
 {
-    
+    public class BacNode
+    {
+        public BacnetAddress adr;
+        public uint device_id;
+
+        public BacNode(BacnetAddress adr, uint device_id)
+        {
+            this.adr = adr;
+            this.device_id = device_id;
+        }
+
+        public BacnetAddress getAdd(uint device_id)
+        {
+            if (this.device_id == device_id)
+                return adr;
+            else
+                return null;
+        }
+    }
     abstract public class BacNet_Service:BacNet_Interface
     {
-        public class BacNode
-        {
-            public BacnetAddress adr;
-            public uint device_id;
-
-            public BacNode(BacnetAddress adr, uint device_id)
-            {
-                this.adr = adr;
-                this.device_id = device_id;
-            }
-
-            public BacnetAddress getAdd(uint device_id)
-            {
-                if (this.device_id == device_id)
-                    return adr;
-                else
-                    return null;
-            }
-        }
-        /*****************************************************************************************************/
         #region variables
         protected BacnetClient bacnet_client;
         protected DeviceStorage m_storage;
         protected List<BacNode> DevicesList;
         protected bool OnlyReadOneTime, OnlyWriteOneTime;
-        protected BacnetValue value;
+        protected int value;
         protected BacNetTypes bacNetType;
         #endregion
         public BacNet_Service(uint ID)
@@ -59,7 +57,6 @@ namespace BacNet_ClassLibrary
                     foreach (BacNode bn in DevicesList)
                         if (bn.getAdd(device_id) != null) return;   // Yes
 
-                    //Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + (device_id != m_storage.DeviceId ? "-> OnIam::"+ device_id : "AutoIam"));
                     // Not already in the list
                     DevicesList.Add(new BacNode(adr, device_id));   // add it
                 }
@@ -93,7 +90,7 @@ namespace BacNet_ClassLibrary
                 OnlyReadOneTime = false;
             }
             public void handler_OnWritePropertyRequest(BacnetClient sender, BacnetAddress adr, byte invoke_id, BacnetObjectId object_id, BacnetPropertyValue value, BacnetMaxSegments max_segments)
-        {
+            {
             if (!OnlyWriteOneTime)
                 OnlyWriteOneTime = true;
             else
@@ -109,7 +106,7 @@ namespace BacNet_ClassLibrary
                     {
                         //Console.WriteLine(bacNetType.ToString() + "-ID:" + m_storage.DeviceId + "-> OnWritePropertyRequest");
                         sender.SimpleAckResponse(adr, BacnetConfirmedServices.SERVICE_CONFIRMED_WRITE_PROPERTY, invoke_id);
-                        this.value = value.value[0];
+                        this.value = Convert.ToInt32(value.value[0].Value);
                     }
                     else
                         sender.ErrorResponse(adr, BacnetConfirmedServices.SERVICE_CONFIRMED_WRITE_PROPERTY, invoke_id, BacnetErrorClasses.ERROR_CLASS_DEVICE, BacnetErrorCodes.ERROR_CODE_OTHER);
@@ -140,7 +137,7 @@ namespace BacNet_ClassLibrary
                     return null;
                 }
             }
-            public BacnetValue GetValue() { return this.value; }
+            public int GetValue() { return this.value; }
             public uint GetID() { return this.m_storage.DeviceId; }
             public BacNetTypes GetBacNetType() { return bacNetType; }
             public void GetDevices(out IList<uint> devices) 

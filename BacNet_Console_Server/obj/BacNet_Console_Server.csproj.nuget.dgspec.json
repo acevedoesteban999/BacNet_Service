@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_Console_Server\\BacNet_Console_Server.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\BacNet_ClassLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\BacNet_ClassLibrary.csproj",
+        "projectName": "BacNet_ClassLibrary",
+        "projectPath": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\BacNet_ClassLibrary.csproj",
+        "packagesPath": "C:\\Users\\Esteban\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Esteban\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Esteban\\Documents\\Nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "BACnet": {
+              "target": "Package",
+              "version": "[3.0.1-beta6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_Console_Server\\BacNet_Console_Server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_Console_Server\\BacNet_Console_Server.csproj",
+        "projectName": "BacNet_Console_Server",
+        "projectPath": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_Console_Server\\BacNet_Console_Server.csproj",
+        "packagesPath": "C:\\Users\\Esteban\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_Console_Server\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Esteban\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\Esteban\\Documents\\Nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\BacNet_ClassLibrary.csproj": {
+                "projectPath": "C:\\Users\\Esteban\\Desktop\\Esteban\\Programacion\\C#\\BacNet_Solution\\BacNet_ClassLibrary\\BacNet_ClassLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

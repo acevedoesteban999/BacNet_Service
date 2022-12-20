@@ -17,8 +17,8 @@ namespace BacNet_ClassLibrary
             : base(ID)
         {
             bacNetType = BacNetTypes.Server;
-            value = new BacnetValue(0);
-            BacnetValue[] NoScalarValue = { value };
+            value = 0;
+            BacnetValue[] NoScalarValue = { new BacnetValue(value) };
             m_storage.WriteProperty(new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, 1, NoScalarValue, true);
 
         }

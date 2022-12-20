@@ -1,0 +1,12 @@
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.csproj.AssemblyReference.cache
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.AssemblyInfoInputs.cache
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.AssemblyInfo.cs
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\bin\Debug\net6.0\BacNet_ClassLibrary.deps.json
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\bin\Debug\net6.0\BacNet_ClassLibrary.dll
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\bin\Debug\net6.0\ref\BacNet_ClassLibrary.dll
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\bin\Debug\net6.0\BacNet_ClassLibrary.pdb
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.dll
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\ref\BacNet_ClassLibrary.dll
+C:\Users\Esteban\Desktop\Esteban\Programacion\C#\BacNet_Solution\BacNet_ClassLibrary\obj\Debug\net6.0\BacNet_ClassLibrary.pdb

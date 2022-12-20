@@ -8,8 +8,8 @@ namespace BacNet_ClassLibrary
         {
             bacNetType = BacNetTypes.Client_ReadWrite;
             Random r = new Random();
-            value = new BacnetValue(r.Next(0, 100));
-            BacnetValue[] NoScalarValue = { value };
+            value = r.Next(0, 100);
+            BacnetValue[] NoScalarValue = { new BacnetValue(value) };
             m_storage.WriteProperty(new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, 1, NoScalarValue, true);
 
         }
