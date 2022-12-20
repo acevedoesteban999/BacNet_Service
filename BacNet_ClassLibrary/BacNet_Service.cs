@@ -1,37 +1,38 @@
 ﻿using System.IO.BACnet;
 using System.IO.BACnet.Storage;
 
-namespace BB_Service_Library
+namespace BacNet_ClassLibrary
 {
-    public class BacNode
-    {
-        public BacnetAddress adr;
-        public uint device_id;
-
-        public BacNode(BacnetAddress adr, uint device_id)
-        {
-            this.adr = adr;
-            this.device_id = device_id;
-        }
-
-        public BacnetAddress getAdd(uint device_id)
-        {
-            if (this.device_id == device_id)
-                return adr;
-            else
-                return null;
-        }
-    }
+    
     abstract public class BacNet_Service:BacNet_Interface
     {
+        public class BacNode
+        {
+            public BacnetAddress adr;
+            public uint device_id;
+
+            public BacNode(BacnetAddress adr, uint device_id)
+            {
+                this.adr = adr;
+                this.device_id = device_id;
+            }
+
+            public BacnetAddress getAdd(uint device_id)
+            {
+                if (this.device_id == device_id)
+                    return adr;
+                else
+                    return null;
+            }
+        }
         /*****************************************************************************************************/
         #region variables
-            protected BacnetClient bacnet_client;
-            protected DeviceStorage m_storage;
-            protected List<BacNode> DevicesList;
-            protected bool OnlyReadOneTime, OnlyWriteOneTime;
-            protected BacnetValue value;
-            protected BacNetTypes bacNetType;
+        protected BacnetClient bacnet_client;
+        protected DeviceStorage m_storage;
+        protected List<BacNode> DevicesList;
+        protected bool OnlyReadOneTime, OnlyWriteOneTime;
+        protected BacnetValue value;
+        protected BacNetTypes bacNetType;
         #endregion
         public BacNet_Service(uint ID)
         {

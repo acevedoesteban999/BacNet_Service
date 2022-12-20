@@ -1,14 +1,15 @@
 ﻿using System.IO.BACnet;
-namespace BB_Service_Library
+namespace BacNet_ClassLibrary
 {
-    public class BacNet_Client_ReadWrite_Service : BacNet_Service
+    public class BacNet_Client_OnlyRead:BacNet_Service
     {
-        public BacNet_Client_ReadWrite_Service(uint ID)
-            : base(ID)
+        
+        public BacNet_Client_OnlyRead(uint ID)
+            :base(ID)
         {
-            bacNetType = BacNetTypes.Client_ReadWrite;
+            bacNetType = BacNetTypes.Client_OnlyRead;
             Random r = new Random();
-            value = new BacnetValue(r.Next(0, 100));
+            value=new BacnetValue(r.Next(0, 100));
             BacnetValue[] NoScalarValue = { value };
             m_storage.WriteProperty(new BacnetObjectId(BacnetObjectTypes.OBJECT_ANALOG_VALUE, 0), BacnetPropertyIds.PROP_PRESENT_VALUE, 1, NoScalarValue, true);
 
@@ -18,7 +19,6 @@ namespace BB_Service_Library
             bacnet_client.Start();
             bacnet_client.OnWhoIs += new BacnetClient.WhoIsHandler(handler_OnWhoIs);
             bacnet_client.OnReadPropertyRequest += new BacnetClient.ReadPropertyRequestHandler(handler_OnReadPropertyRequest);
-            bacnet_client.OnWritePropertyRequest += new BacnetClient.WritePropertyRequestHandler(handler_OnWritePropertyRequest);
             bacnet_client.WhoIs();
         }
     }
